@@ -1,0 +1,28 @@
+.sidebar {
+  float: right;
+  width: 230px;
+  background-color:aqua;
+  height: 100%;
+
+  &__filter {
+    //background-color: #434343;
+    width: 90%;
+    height: 50%;
+    margin: 0 auto;
+  }
+
+  &__content {
+    padding: 10px;
+    p {
+      color: #fff;
+
+    }
+    &__radio {
+      //display: block;
+    }
+
+    &__author {
+      display: block;
+    }
+  }
+}

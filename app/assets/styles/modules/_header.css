@@ -1,0 +1,7 @@
+  .header {
+    background-color: #434343;
+    color: #fff;
+    &__title {
+      padding: 10px;
+    }
+  }

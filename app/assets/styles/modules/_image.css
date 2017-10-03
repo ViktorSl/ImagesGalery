@@ -1,0 +1,8 @@
+.image {
+  width: 225px;
+  height: 225px;
+  background-color: aliceblue;
+  margin-left: 12px;
+  margin-top: 12px; 
+  float: left;
+}
