@@ -8877,9 +8877,9 @@
 
 	"use strict";
 
-	var _imageList = __webpack_require__(327);
+	var _ImageList = __webpack_require__(327);
 
-	var _imageList2 = _interopRequireDefault(_imageList);
+	var _ImageList2 = _interopRequireDefault(_ImageList);
 
 	var _image = __webpack_require__(328);
 
@@ -8893,6 +8893,10 @@
 
 	var author = document.querySelector(".sidebar__content__author");
 	var imgContainer = document.querySelector(".image-container");
+
+	window.addEventListener('load', function () {
+	  _imageService2.default.getAllImages();
+	});
 
 	author.addEventListener("input", _imageService2.default.getImageByAuthor);
 	imgContainer.addEventListener("click", _imageService2.default.getBigImage);
@@ -9009,21 +9013,25 @@
 
 	var _config2 = _interopRequireDefault(_config);
 
-	var _imageList = __webpack_require__(327);
+	var _ImageList = __webpack_require__(327);
 
-	var _imageList2 = _interopRequireDefault(_imageList);
-
-	var _imageService = __webpack_require__(330);
-
-	var _imageService2 = _interopRequireDefault(_imageService);
+	var _ImageList2 = _interopRequireDefault(_ImageList);
 
 	var _image = __webpack_require__(328);
 
 	var _image2 = _interopRequireDefault(_image);
 
+	var _Pagination = __webpack_require__(331);
+
+	var _Pagination2 = _interopRequireDefault(_Pagination);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var pagContainer = document.querySelector('.pagination');
 	var imgContainer = document.querySelector(".image-container");
+	var wrapper = document.querySelector(".wrapper");
+	var pagination = new _Pagination2.default();
+	var list = new _ImageList2.default();
 
 	function getData() {
 	  return fetch(_config2.default.getData).then(function (r) {
@@ -9031,11 +9039,21 @@
 	  });
 	}
 
+	function getAllImages() {
+	  getData().then(function (data) {
+	    console.log("data.length = " + data.length);
+	    var dvad = data.slice(0, 20);
+	    return dvad;
+	  }).then(function (data) {
+	    list.renderImage(data);
+	    list.drawToDom(imgContainer);
+	  });
+	}
+
 	function getImageByAuthor(e) {
 	  var searchText = e.target.value;
-	  var list = new _imageList2.default();
 
-	  _imageService2.default.getData().then(function (data) {
+	  getData().then(function (data) {
 	    var arr = data;
 	    var newarr = void 0;
 	    newarr = arr.filter(function (img) {
@@ -9043,14 +9061,13 @@
 	    });
 	    return newarr;
 	  }).then(function (data) {
-	    console.log("app data = " + data);
 	    list.renderImage(data);
 	    list.drawToDom(imgContainer);
 	  });
 	}
 
 	function getBigImage(e) {
-	  if (e.target.className !== "bigImage") {
+	  if (e.target.classList[0] !== "bigImage" && e.target.classList[1] !== "hidden") {
 	    var current = e.srcElement.src;
 	    var newEl = void 0;
 	    var oldval = "/225/225",
@@ -9060,18 +9077,38 @@
 	    var bigImage = document.createElement("div");
 	    bigImage.classList.add("bigImage");
 	    bigImage.style.backgroundImage = "url(" + newEl + ")";
+	    wrapper.classList.add("hidden");
 	    imgContainer.appendChild(bigImage);
-	    console.log(bigImage);
 	  } else {
 	    e.target.classList.remove("bigImage");
+	    wrapper.classList.remove("hidden");
 	  }
 	}
 
 	exports.default = {
 	  getData: getData,
 	  getImageByAuthor: getImageByAuthor,
-	  getBigImage: getBigImage
+	  getBigImage: getBigImage,
+	  getAllImages: getAllImages
 	};
+
+/***/ }),
+/* 331 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var Pagination = function Pagination() {
+	  _classCallCheck(this, Pagination);
+	};
+
+	exports.default = Pagination;
 
 /***/ })
 /******/ ]);

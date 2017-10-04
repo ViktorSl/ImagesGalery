@@ -682,7 +682,7 @@ Instead edit gulp/templates/sprite */
     width: 960px;
     background-color: blue;
     height: 100%;
-    min-height: 500px;
+    min-height: 200px;
     float: left;
     padding-bottom: 12px;
   }
@@ -693,6 +693,12 @@ Instead edit gulp/templates/sprite */
     height: 800px;
     z-index: 10;
     background-repeat: no-repeat;
+    cursor: pointer;
+  }
+
+.hidden {
+    height: 1px;
+    overflow: hidden;
   }
 
 .sidebar {
@@ -732,6 +738,7 @@ Instead edit gulp/templates/sprite */
   margin-left: 12px;
   margin-top: 12px; 
   float: left;
+  cursor: pointer;
 }
 
 

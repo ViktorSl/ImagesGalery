@@ -2,7 +2,7 @@
     width: 960px;
     background-color: blue;
     height: 100%;
-    min-height: 500px;
+    min-height: 200px;
     float: left;
     padding-bottom: 12px;
   }
@@ -13,4 +13,10 @@
     height: 800px;
     z-index: 10;
     background-repeat: no-repeat;
+    cursor: pointer;
+  }
+
+  .hidden {
+    height: 1px;
+    overflow: hidden;
   }
