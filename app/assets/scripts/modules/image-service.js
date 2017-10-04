@@ -1,13 +1,15 @@
 import config from "./config";
 import Imagelist from "./ImageList";
 import img from "./image";
-import Pagination from './Pagination'
+import Pagination from './Pagination';
 
-let pagContainer = document.querySelector('.pagination');
 let imgContainer = document.querySelector(".image-container");
 let wrapper = document.querySelector(".wrapper");
+let pagContainer = document.querySelector('.pagination');
 let pagination = new Pagination();
 let list = new Imagelist();
+
+let dataLength;
 
 function getData() {
   return fetch(config.getData).then(r => r.json());
@@ -16,9 +18,22 @@ function getData() {
 function getAllImages() {
   getData()
   .then(data => {
-    console.log("data.length = "+data.length);
-    let dvad = data.slice(0,20);
-    return dvad;
+    dataLength = data.length;
+    createPagBlock();
+    let temp = data;
+    let onePage = temp.slice(40, 60);
+
+    pagContainer.addEventListener('click', function(e) {
+      let curElValue = e.target.innerHTML;
+      console.log(curElValue);
+      let end = curElValue * 20;
+      let start = end - 20;
+      onePage = temp.slice(start, end);
+      console.log(onePage);
+      list.renderImage(onePage);
+      list.drawToDom(imgContainer);
+    }); 
+    return onePage;
   })
   .then(data => {
     list.renderImage(data);
@@ -26,9 +41,22 @@ function getAllImages() {
   });
 }
 
+function createPagBlock() {
+  let numOfIteration = Math.floor(dataLength / 20 + 2);
+  for(let i = 1; i < numOfIteration; i++) {
+    pagContainer.appendChild(createPagElement(i));
+  }
+}
+
+function createPagElement(num) {
+  let pagBlock = document.createElement('div');
+  pagBlock.classList.add("pagElement");
+  pagBlock.innerHTML = num;
+  return pagBlock;
+}
+
 function getImageByAuthor(e) {
   let searchText = e.target.value;
-
   getData()
     .then(data => {
       let arr = data;

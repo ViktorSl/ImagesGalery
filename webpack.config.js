@@ -4,6 +4,9 @@ module.exports = {
     path: "./app/temp/scripts",
     filename: "App.js"
   },
+
+  devtool: "source-map",
+
   module: {
     loaders: [
       {

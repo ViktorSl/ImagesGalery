@@ -666,7 +666,12 @@ Instead edit gulp/templates/sprite */
   width: 1200px;
   height: 100%;
   margin-top: 10px;
+}
 
+.galery::after {
+  content: "";
+  clear: both;
+  display: table;
 }
 
 .header {
@@ -679,8 +684,8 @@ Instead edit gulp/templates/sprite */
 }
 
 .image-container {
-    width: 960px;
-    background-color: blue;
+    width: 948px;
+    background-color: lightgray;
     height: 100%;
     min-height: 200px;
     float: left;
@@ -704,8 +709,8 @@ Instead edit gulp/templates/sprite */
 .sidebar {
   float: right;
   width: 230px;
-  background-color:aqua;
-  height: 100%;
+  background-color: lightgrey;
+  height: 760px;
 }
 
 .sidebar__filter {
@@ -723,21 +728,43 @@ Instead edit gulp/templates/sprite */
   color: #fff;
 }
 
-.sidebar__content__radio {
-  //display: block;
-}
+.sidebar__content__radio {}
 
 .sidebar__content__author {
   display: block;
 }
 
 .image {
-  width: 225px;
-  height: 225px;
+  width: 175px;
+  height: 175px;
   background-color: aliceblue;
   margin-left: 12px;
   margin-top: 12px; 
   float: left;
+  cursor: pointer;
+}
+
+.pagination {
+  width: 1200px;
+  margin: 0 auto 20px;
+  padding: 30px 0;
+}
+
+.pagination::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.pagElement {
+  width: 30px;
+  height: 30px;
+  margin: 1px;
+  background-color: green;
+  color: white;
+  text-align: center;
+  line-height: 30px;
+  float: left; 
   cursor: pointer;
 }
 
