@@ -5,18 +5,20 @@
   height: 760px;
 
   &__filter {
-    //background-color: #434343;
     width: 90%;
     height: 50%;
     margin: 0 auto;
+   p {
+     background-color: #c9c9c9;
+     margin-top: 10px;
+     margin-bottom: 10px;
+     font-size: 1.2rem;
+    }
   }
 
   &__content {
-    padding: 10px;
-    p {
-      color: #fff;
+    padding: 0 10px;
 
-    }
     &__radio {
      
     }

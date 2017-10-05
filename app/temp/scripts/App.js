@@ -8889,6 +8889,10 @@
 	
 	var _imageService2 = _interopRequireDefault(_imageService);
 	
+	var _getAuthors = __webpack_require__(331);
+	
+	var _getAuthors2 = _interopRequireDefault(_getAuthors);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var author = document.querySelector(".sidebar__content__author");
@@ -8899,6 +8903,8 @@
 	  _imageService2.default.getAllImages();
 	  _imageService2.default.getImageBySize();
 	});
+	
+	(0, _getAuthors2.default)();
 	
 	author.addEventListener("input", _imageService2.default.getImageByAuthor);
 	imgContainer.addEventListener("click", _imageService2.default.getBigImage);
@@ -8940,18 +8946,19 @@
 	      var _this = this;
 	
 	      this.fragment = document.createDocumentFragment();
-	
-	      arr.forEach(function (data) {
-	        var div = document.createElement("div");
-	        div.classList.add("image");
-	        div.innerHTML = (0, _image2.default)(data.id);
-	        _this.fragment.appendChild(div);
-	      });
+	      if (arr.length !== 0) {
+	        arr.forEach(function (data) {
+	          var div = document.createElement("div");
+	          div.classList.add("image");
+	          div.innerHTML = (0, _image2.default)(data.id);
+	          _this.fragment.appendChild(div);
+	        });
+	      }
 	    }
 	  }, {
 	    key: "clearList",
 	    value: function clearList(selector) {
-	      selector.innerHTML = '';
+	      selector.innerHTML = "";
 	    }
 	  }]);
 	
@@ -9028,6 +9035,7 @@
 	var imgContainer = document.querySelector(".image-container");
 	var wrapper = document.querySelector(".wrapper");
 	var pagContainer = document.querySelector(".pagination");
+	var pag = document.querySelector(".pagination");
 	var list = new _ImageList2.default();
 	
 	var dataLength = void 0;
@@ -9044,18 +9052,9 @@
 	    var temp = data;
 	    var startPage = temp.slice(0, 20);
 	
-	    pagContainer.addEventListener("click", function (e) {
-	      var curElValue = e.target.innerHTML;
-	      var end = curElValue * 20;
-	      var start = end - 20;
-	      startPage = temp.slice(start, end);
-	      list.renderImage(startPage);
-	      list.drawToDom(imgContainer);
-	    });
-	    return startPage;
-	  }).then(function (data) {
-	    list.renderImage(data);
+	    list.renderImage(startPage);
 	    list.drawToDom(imgContainer);
+	    createImagesList(data);
 	  });
 	}
 	
@@ -9094,26 +9093,30 @@
 	function createImagesList(data) {
 	  createPagBlock(data);
 	  var temp = data;
-	  var startPage = temp.slice(0, 20);
+	  var curPage = temp.slice(0, 20);
 	
 	  pagContainer.addEventListener("click", function (e) {
 	    var curElValue = e.target.innerHTML;
 	    var end = curElValue * 20;
 	    var start = end - 20;
-	    startPage = temp.slice(start, end);
-	    list.renderImage(startPage);
+	    curPage = temp.slice(start, end);
+	    list.renderImage(curPage);
 	    list.drawToDom(imgContainer);
 	  });
-	  return startPage;
+	  return curPage;
 	}
 	
 	function getBigImage(e) {
-	  if (e.target.classList[0] !== "bigImage" && e.target.classList[1] !== "hidden") {
-	    var current = e.srcElement.src;
+	  var curTarget = e.target;
+	
+	  if (curTarget.classList[0] !== "bigImage" && curTarget.classList[1] !== "hidden" && pag.classList[0] !== "hidePag") {
+	    var currentSrc = e.srcElement.src;
 	    var newEl = void 0;
 	    var oldval = "/175/175",
 	        newval = "/1200/800";
-	    newEl = current.replace(oldval, newval);
+	    newEl = currentSrc.replace(oldval, newval);
+	
+	    pag.classList.add("hidePag");
 	
 	    var bigImage = document.createElement("div");
 	    bigImage.classList.add("bigImage");
@@ -9121,8 +9124,9 @@
 	    wrapper.classList.add("hidden");
 	    imgContainer.appendChild(bigImage);
 	  } else {
-	    e.target.classList.remove("bigImage");
+	    curTarget.classList.remove("bigImage");
 	    wrapper.classList.remove("hidden");
+	    pag.classList.remove("hidePag");
 	  }
 	}
 	
@@ -9131,8 +9135,6 @@
 	  for (var i = 0; i < rad.length; i++) {
 	    rad[i].onchange = function () {
 	      sortImg(this.value);
-	      list.renderImage(data);
-	      list.drawToDom(imgContainer);
 	    };
 	  }
 	
@@ -9151,10 +9153,13 @@
 	      });
 	      return arr;
 	    }).then(function (data) {
-	      createImagesList(data);
-	    }).then(function (data) {
-	      list.renderImage(data);
+	      createPagBlock(data);
+	      var temp = data;
+	      var startPage = temp.slice(0, 20);
+	      list.renderImage(startPage);
 	      list.drawToDom(imgContainer);
+	
+	      createImagesList(data);
 	    });
 	  }
 	}
@@ -9166,6 +9171,44 @@
 	  getAllImages: getAllImages,
 	  getImageBySize: getImageBySize
 	};
+
+/***/ }),
+/* 331 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = getAuthors;
+	
+	var _imageService = __webpack_require__(330);
+	
+	var _imageService2 = _interopRequireDefault(_imageService);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function getAuthors() {
+	  _imageService2.default.getData().then(function (data) {
+	    var authors = data.map(function (data) {
+	      return data.author;
+	    });
+	
+	    function unique(arr) {
+	      var obj = {};
+	      for (var i = 0; i < arr.length; i++) {
+	        var str = arr[i];
+	        obj[str] = true;
+	      }
+	      return Object.keys(obj);
+	    }
+	    var authors1 = unique(authors);
+	    return authors1;
+	  }).then(function (data) {
+	    console.log(data);
+	  });
+	}
 
 /***/ })
 /******/ ]);

@@ -697,13 +697,32 @@ Instead edit gulp/templates/sprite */
     width: 1200px;
     height: 800px;
     z-index: 10;
+    background-color: black;
     background-repeat: no-repeat;
     cursor: pointer;
-  }
+}
 
 .hidden {
     height: 1px;
     overflow: hidden;
+  }
+
+.hidePag {
+    display: none;
+  }
+
+.black {
+    color: black;
+  }
+
+.loading {
+    position: absolute;
+    width: 1200px;
+    height: 800px;
+    z-index: 1;
+    background-color: black;
+    color: aliceblue;
+    cursor: pointer;
   }
 
 .sidebar {
@@ -714,18 +733,20 @@ Instead edit gulp/templates/sprite */
 }
 
 .sidebar__filter {
-  //background-color: #434343;
   width: 90%;
   height: 50%;
   margin: 0 auto;
 }
 
-.sidebar__content {
-  padding: 10px;
+.sidebar__filter p {
+  background-color: #c9c9c9;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
 }
 
-.sidebar__content p {
-  color: #fff;
+.sidebar__content {
+  padding: 0 10px;
 }
 
 .sidebar__content__radio {}
