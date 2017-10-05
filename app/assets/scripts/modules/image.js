@@ -1,6 +1,6 @@
 import conf from './config';
 
-export default function image(id, width=225, height=225) {
+export default function image(id, width=175, height=175) {
   
   const html = `
     <div>
